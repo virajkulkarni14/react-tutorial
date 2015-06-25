@@ -17,3 +17,9 @@ var CommentForm = React.createClass({
     );
   }
 });
+React.render(
+  <CommentList />,
+  // <CommentForm />,
+  document.getElementById('content')
+);
+
