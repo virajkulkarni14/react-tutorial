@@ -1,5 +1,5 @@
-# This file provided by Facebook is for non-commercial testing and evaluation purposes only.
-# Facebook reserves all rights not expressly granted.
+# This file provided by Facebook is for non-commercial testing and evaluation
+# purposes only. Facebook reserves all rights not expressly granted.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -16,10 +16,10 @@ port = ENV['PORT'].nil? ? 3000 : ENV['PORT'].to_i
 puts "Server started: http://localhost:#{port}/"
 
 root = File.expand_path './public'
-server = WEBrick::HTTPServer.new :Port => port, :DocumentRoot => root
+server = WEBrick::HTTPServer.new Port: port, DocumentRoot: root
 
-server.mount_proc '/comments.json' do |req, res|
-  comments = JSON.parse(File.read('./comments.json'))
+server.mount_proc '/api/comments' do |req, res|
+  comments = JSON.parse(File.read('./comments.json', encoding: 'UTF-8'))
 
   if req.request_method == 'POST'
     # Assume it's well formed
@@ -28,7 +28,11 @@ server.mount_proc '/comments.json' do |req, res|
       comment[key] = value.force_encoding('UTF-8')
     end
     comments << comment
-    File.write('./comments.json', JSON.pretty_generate(comments, :indent => '    '))
+    File.write(
+      './comments.json',
+      JSON.pretty_generate(comments, indent: '    '),
+      encoding: 'UTF-8'
+    )
   end
 
   # always return json
@@ -37,6 +41,6 @@ server.mount_proc '/comments.json' do |req, res|
   res.body = JSON.generate(comments)
 end
 
-trap 'INT' do server.shutdown end
+trap('INT') { server.shutdown }
 
 server.start

@@ -9,6 +9,8 @@
     },
     {
         "author": "Mark",
-        "text": "Hello"
+        "text": "Hello",
+        "author": "Paul O’Shannessy",
+        "text": "React is *great*!"
     }
 ]

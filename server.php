@@ -1,7 +1,7 @@
 <?php
 /**
- * This file provided by Facebook is for non-commercial testing and evaluation purposes only.
- * Facebook reserves all rights not expressly granted.
+ * This file provided by Facebook is for non-commercial testing and evaluation
+ * purposes only. Facebook reserves all rights not expressly granted.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -31,7 +31,7 @@ function routeRequest()
     $uri = $_SERVER['REQUEST_URI'];
     if ($uri == '/') {
         echo file_get_contents('./public/index.html');
-    } elseif (preg_match('/\/comments.json(\?.*)?/', $uri)) {
+    } elseif (preg_match('/\/api\/comments(\?.*)?/', $uri)) {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $commentsDecoded = json_decode($comments, true);
             $commentsDecoded[] = ['author'  => $_POST['author'],

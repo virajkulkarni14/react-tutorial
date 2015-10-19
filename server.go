@@ -1,6 +1,6 @@
 /**
- * This file provided by Facebook is for non-commercial testing and evaluation purposes only.
- * Facebook reserves all rights not expressly granted.
+ * This file provided by Facebook is for non-commercial testing and evaluation
+ * purposes only. Facebook reserves all rights not expressly granted.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -57,7 +57,7 @@ func handleComments(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
 		// Decode the JSON data
-		comments := make([]comment, 0)
+		var comments []comment
 		if err := json.Unmarshal(commentData, &comments); err != nil {
 			http.Error(w, fmt.Sprintf("Unable to Unmarshal comments from data file (%s): %s", dataFile, err), http.StatusInternalServerError)
 			return
@@ -101,7 +101,7 @@ func main() {
 	if port == "" {
 		port = "3000"
 	}
-	http.HandleFunc("/comments.json", handleComments)
+	http.HandleFunc("/api/comments", handleComments)
 	http.Handle("/", http.FileServer(http.Dir("./public")))
 	log.Println("Server started: http://localhost:" + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
